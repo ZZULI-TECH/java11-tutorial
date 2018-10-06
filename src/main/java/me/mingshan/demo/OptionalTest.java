@@ -58,6 +58,17 @@ public class OptionalTest {
     }
 
     /**
+     * orElseThrow 抛异常
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test41() {
+        User user = null;
+
+        User result = Optional.ofNullable(user)
+        .orElseThrow(() -> new IllegalArgumentException());
+    }
+
+    /**
      * map 转换值
      */
     @Test
