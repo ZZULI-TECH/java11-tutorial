@@ -1,14 +1,12 @@
 package me.mingshan.demo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Optional
@@ -65,7 +63,7 @@ public class OptionalTest {
         User user = null;
 
         User result = Optional.ofNullable(user)
-        .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 
     /**
@@ -75,8 +73,9 @@ public class OptionalTest {
     public void test4() {
         User user = new User(22, "walker");
         String name = Optional.ofNullable(user)
-                        .map(u -> u.getName()).orElse("zz");
+                        .map(User::getName).orElse("zz");
         assertEquals(user.getName(), name);
+         
     }
 
     /**
@@ -112,9 +111,8 @@ public class OptionalTest {
     @Test
     public void test7() {
         User user = null;
-
         Optional.ofNullable(user)
-        .ifPresentOrElse(u -> System.out.print(u), () -> System.out.println("User not found"));
+            .ifPresentOrElse(System.out::print, () -> System.out.println("User not found"));
     }
 
     /**
@@ -124,14 +122,19 @@ public class OptionalTest {
     @Test
     public void test8() {
         User user = new User(22, "walker");
-        List<String> names = Optional.ofNullable(user)
+        User user2 = new User(19, "walker2");
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        users.add(user2);
+
+        List<String> names = Optional.ofNullable(users)
             .stream()
-            .filter(u -> u.getName().contains("w") && u.getAge() > 20)
-            .map(u -> u.getName())
+            .flatMap(Collection::stream)
+            .filter(u -> u.getName().contains("w") && u.getAge() > 19)
+            .map(User::getName)
             .collect(Collectors.toList());
 
-        assertTrue(names.size() == 1);
-        assertEquals(user.getName(), names.get(0));
+        names.forEach(System.out::println);
     }
 
     private User createNewUser() {
@@ -143,6 +146,7 @@ public class OptionalTest {
 class User {
     private int age;
     private String name;
+    private String email;
 
     public User() {}
 
@@ -166,6 +170,14 @@ class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
