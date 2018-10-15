@@ -7,7 +7,7 @@ import java.util.concurrent.RecursiveTask;
  * @Date: Created in 18:03 2018/10/14
  */
 public class SumTask extends RecursiveTask<Long> {
-    public static final int THRESHOLD = 500000;
+    public static final int THRESHOLD = 2000000;
     private long[] numbers;
     private int start;
     private int end;

@@ -30,7 +30,5 @@ public class Test {
         long result3 = calculator3.sum(numbers);
         long executedTime3 = System.currentTimeMillis() - currentTime3;
         System.out.println("Fork/Join计算结果：" + result3 + ", 耗时：" + executedTime3);
-
-
     }
 }
