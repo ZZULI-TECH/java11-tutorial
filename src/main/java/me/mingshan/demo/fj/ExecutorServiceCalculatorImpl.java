@@ -19,7 +19,7 @@ public class ExecutorServiceCalculatorImpl implements Calculator {
         int keepAliveTime = 30;
         System.out.println(String.format("corePoolSize = %s, maximumPoolSize = %s", corePoolSize, maximumPoolSize));
         BlockingQueue<Runnable> workQueue = new LinkedBlockingDeque<>();
-        //线程的创建工厂
+        // 线程的创建工厂
         ThreadFactory threadFactory = new ThreadFactory() {
             private final AtomicInteger mCount = new AtomicInteger(1);
 
@@ -45,11 +45,15 @@ public class ExecutorServiceCalculatorImpl implements Calculator {
     public long sum(long[] numbers) {
         List<Future<Long>> results = new ArrayList<>();
 
-        // 把任务分解为 n 份，交给 n 个线程处理
+        // 把任务分解为 n 份，交给 n 个线程处理，
+        // 此时由于int类型丢失精度
         int part = numbers.length / parallism;
         for (int i = 0; i < parallism; i++) {
+            // 进行任务分配
             int from = i * part;
+            // 最后一份任务可能不均匀，直接分配给最后一个线程
             int to = (i == parallism - 1) ? numbers.length - 1 : (i + 1) * part - 1;
+            // 提交计算任务
             results.add(pool.submit(new SumTask(numbers, from, to)));
         }
 
