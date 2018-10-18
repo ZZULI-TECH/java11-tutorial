@@ -17,7 +17,7 @@ public class ExecutorServiceCalculatorImpl implements Calculator {
         int corePoolSize = Math.max(2, Math.min(parallism - 1, 4));
         int maximumPoolSize = parallism * 2 + 1;
         int keepAliveTime = 30;
-        System.out.println(String.format("corePoolSize = %s, maximumPoolSize = %s", corePoolSize, maximumPoolSize));
+        //System.out.println(String.format("corePoolSize = %s, maximumPoolSize = %s", corePoolSize, maximumPoolSize));
         BlockingQueue<Runnable> workQueue = new LinkedBlockingDeque<>();
         // 线程的创建工厂
         ThreadFactory threadFactory = new ThreadFactory() {
