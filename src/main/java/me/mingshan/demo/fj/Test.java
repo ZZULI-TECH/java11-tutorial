@@ -8,7 +8,7 @@ import java.util.stream.LongStream;
  */
 public class Test {
     public static void main(String[] args) {
-        long[] numbers = LongStream.rangeClosed(1L, 100000000L).toArray();
+        long[] numbers = LongStream.rangeClosed(1L, 100_000_000L).toArray();
 
         // 1 直接for循环
         Calculator calculator = new ForLoopCalculatorImpl();
